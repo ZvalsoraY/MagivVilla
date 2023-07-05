@@ -12,12 +12,20 @@ namespace MagivVilla_VillaApi.Controllers
     [ApiController]
     public class VillaAPIController : ControllerBase
     {
+        private ILogger<VillaAPIController> _logger;
+        public VillaAPIController(ILogger<VillaAPIController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
+            _logger.LogInformation("Get all villas");
             return Ok(VillaStore.villaList);
         }
+
         [HttpGet("{id:int}", Name = "GetVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -27,6 +35,7 @@ namespace MagivVilla_VillaApi.Controllers
         {
             if (id == 0)
             {
+                _logger.LogError("Get Villa Error with Id" + id);
                 return BadRequest();
             }
             var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
