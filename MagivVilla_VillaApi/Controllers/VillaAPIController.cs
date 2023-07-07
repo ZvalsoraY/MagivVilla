@@ -1,4 +1,5 @@
 ﻿using MagivVilla_VillaApi.Data;
+using MagivVilla_VillaApi.Logging;
 using MagivVilla_VillaApi.Models;
 using MagivVilla_VillaApi.Models.Dto;
 using Microsoft.AspNetCore.JsonPatch;
@@ -12,8 +13,15 @@ namespace MagivVilla_VillaApi.Controllers
     [ApiController]
     public class VillaAPIController : ControllerBase
     {
-        private ILogger<VillaAPIController> _logger;
-        public VillaAPIController(ILogger<VillaAPIController> logger)
+        //private readonly ILogger<VillaAPIController> _logger;
+        //public VillaAPIController(ILogger<VillaAPIController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        private readonly ILogging _logger;
+
+        public VillaAPIController(ILogging logger)
         {
             _logger = logger;
         }
@@ -22,7 +30,8 @@ namespace MagivVilla_VillaApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
-            _logger.LogInformation("Get all villas");
+            //_logger.LogInformation("Get all villas");
+            _logger.Log("Get all villas", "");
             return Ok(VillaStore.villaList);
         }
 
@@ -35,7 +44,8 @@ namespace MagivVilla_VillaApi.Controllers
         {
             if (id == 0)
             {
-                _logger.LogError("Get Villa Error with Id" + id);
+                //_logger.LogError("Get Villa Error with Id" + id);
+                _logger.Log("Get Villa Error with Id" + id, "error");
                 return BadRequest();
             }
             var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
