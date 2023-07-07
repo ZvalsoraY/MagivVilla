@@ -19,11 +19,15 @@ namespace MagivVilla_VillaApi.Controllers
         //    _logger = logger;
         //}
 
-        private readonly ILogging _logger;
+        //private readonly ILogging _logger;
 
-        public VillaAPIController(ILogging logger)
+        //public VillaAPIController(ILogging logger)
+        //{
+        //    _logger = logger;
+        //}
+        public VillaAPIController()
         {
-            _logger = logger;
+            
         }
 
         [HttpGet]
@@ -31,7 +35,7 @@ namespace MagivVilla_VillaApi.Controllers
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
             //_logger.LogInformation("Get all villas");
-            _logger.Log("Get all villas", "");
+            //_logger.Log("Get all villas", "");
             return Ok(VillaStore.villaList);
         }
 
@@ -45,7 +49,7 @@ namespace MagivVilla_VillaApi.Controllers
             if (id == 0)
             {
                 //_logger.LogError("Get Villa Error with Id" + id);
-                _logger.Log("Get Villa Error with Id" + id, "error");
+                //_logger.Log("Get Villa Error with Id" + id, "error");
                 return BadRequest();
             }
             var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
