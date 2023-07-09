@@ -4,6 +4,7 @@ using MagivVilla_VillaApi.Models;
 using MagivVilla_VillaApi.Models.Dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace MagivVilla_VillaApi.Controllers
@@ -175,7 +176,8 @@ namespace MagivVilla_VillaApi.Controllers
                 return BadRequest();
             }
             //var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
-            var villa = _db.Villas.FirstOrDefault(u => u.Id == id);
+            var villa = _db.Villas.AsNoTracking().FirstOrDefault(u => u.Id == id);
+
 
             VillaDTO villaDTO = new()
             {
